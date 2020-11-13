@@ -19,11 +19,6 @@
 ; *
 ; *****************************************************************************/
 
-;	IMPORT TIMER2_IRQHandler
-	IMPORT SysTick_Handler
-	IMPORT RTC_IRQHandler
-;	IMPORT PendSV_Handler
-
 ; <h> Stack Configuration
 ;   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
@@ -447,7 +442,11 @@ DebugMon_Handler\
                 B       .
                 ENDP
 PendSV_Handler	PROC
-				EXPORT  PendSV_Handler      [WEAK]
+				EXPORT  PendSV_Handler            [WEAK]
+				B       .
+				ENDP
+SysTick_Handler	PROC
+				EXPORT  SysTick_Handler           [WEAK]
 				B       .
 				ENDP
 
@@ -466,11 +465,11 @@ Default_Handler PROC
 				EXPORT  I2C0_IRQHandler           [WEAK]
 				EXPORT  I2C1_IRQHandler           [WEAK]
 				EXPORT  I2C2_IRQHandler           [WEAK]
-				;EXPORT  SPIFI_IRQHandler          [WEAK]
+				EXPORT  SPIFI_IRQHandler          [WEAK]
 				EXPORT  SSP0_IRQHandler           [WEAK]
 				EXPORT  SSP1_IRQHandler           [WEAK]
 				EXPORT  PLL0_IRQHandler           [WEAK]
-				;EXPORT  RTC_IRQHandler            [WEAK]
+				EXPORT  RTC_IRQHandler            [WEAK]
 				EXPORT  EINT0_IRQHandler          [WEAK]
 				EXPORT  EINT1_IRQHandler          [WEAK]
 				EXPORT  EINT2_IRQHandler          [WEAK]
@@ -508,11 +507,11 @@ PWM1_IRQHandler
 I2C0_IRQHandler
 I2C1_IRQHandler
 I2C2_IRQHandler
-;SPIFI_IRQHandler	;not used            
+SPIFI_IRQHandler
 SSP0_IRQHandler
 SSP1_IRQHandler
 PLL0_IRQHandler
-;RTC_IRQHandler
+RTC_IRQHandler
 EINT0_IRQHandler
 EINT1_IRQHandler
 EINT2_IRQHandler

@@ -10,7 +10,7 @@
 
 extern void LogPrint(int level, char* format, ... );
 extern int  Strnicmp(char *str1, char *str2, int n);
-extern void InitDevInfo(void);
+extern void InitDevInfo(u32_t* cpuSN);
 extern unsigned long GetMyIP(void);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////

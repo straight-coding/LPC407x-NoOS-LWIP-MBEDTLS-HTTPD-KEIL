@@ -546,11 +546,7 @@ void SystemInit (void)
   LPC_SC->FLASHCFG  = FLASHCFG_Val|0x03A;
 #endif
 
-#ifdef _DEBUG
-  SCB->VTOR  = 0x00000000 & 0x3FFFFF80;
-#else
-  SCB->VTOR  = 0x10000000 & 0x3FFFFF80;
-#endif
+  SCB->VTOR  = 0x00000000;
 
   SystemCoreClockUpdate();
 }

@@ -54,9 +54,11 @@ u32_t  g_nNetIsUp = 0xFFFFFFFF;
 static DeviceConfig g_WorkConfig;
 static DeviceConfig g_TempConfig;
 
-void InitDevInfo(void)
+void InitDevInfo(u32_t* cpuSN)
 {
 	memset(&g_WorkConfig, 0, sizeof(g_WorkConfig));
+	
+	memcpy(g_byMyMAC+3, (u8_t*)cpuSN, 3);
 
 	g_WorkConfig.nDhcpEnabled = 1;// 0 or 1;
 	

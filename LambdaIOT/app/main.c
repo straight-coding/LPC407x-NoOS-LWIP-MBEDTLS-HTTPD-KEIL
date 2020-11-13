@@ -32,6 +32,7 @@ extern struct netif main_netif;
 struct altcp_pcb *g_pcbListen80 = NULL;
 struct altcp_pcb *g_pcbListen443 = NULL;
 
+extern unsigned long g_luSN[];
 extern unsigned long GetLongIP(void);
 extern unsigned long GetSubnet(void);
 extern unsigned long GetGateway(void);
@@ -50,36 +51,22 @@ long long tLastPollTick = 0;
 
 int main(void)
 {
-#ifdef _DEBUG
-	SCB->VTOR = (unsigned long)0x00000000; //burn form 0x28000
-#else
-	SCB->VTOR = (unsigned long)(WORKCODE_BASE+0x1000); //burn from 0x30000, but run from 0x31000
-#endif
+	SCB->VTOR = (unsigned long)0x00000000;
 
 	CPU_IntDis(); //disable all inturrupts
 	
 	BSP_SysTickInit(); //setup the System Tick Timer
 	
 	BSP_GPIO_Init(); //Configure GPIO power/clock control bit
-	
-	LogPrint(0, "\r\n");
-	LogPrint(0, "Initial...\r\n");
-	
-#ifdef _SSP
-	BSP_SSP_Init();
-#endif
+	GPIO_SetDir(4, (1<<23), 1); //LED1: P4.23
 	
 	BSP_RTC_Init();			//RTC
-	BSP_IAP_Init();			//IAP
 	
-	InitDevInfo(); //initiate device settings
+	BSP_IAP_Init();			//IAP
+	InitDevInfo(&g_luSN[3]); //initiate device settings, after BSP_IAP_Init()
 
 // initialization done
 	CPU_IntEn();
-
-	GPIO_SetDir(4, (1<<23), 1); //LED1: P4.23
-	//GPIO_SetDir(4, (1<<26), 1); //LED2: P4.26
-	//GPIO_SetDir(5, (1<< 1), 1); //BEEP: P5.1
 	
 	WEB_fs_init();	//initiate file system in memory
 	

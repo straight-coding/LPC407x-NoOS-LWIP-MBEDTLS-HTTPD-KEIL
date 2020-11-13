@@ -11,14 +11,6 @@
 // Network
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-#define MAX_DMA_QUEUE	1024
-struct packet_wrapper
-{
-	long len;
-	unsigned char* packet;	/* allocated */
-	void* next;				/* next packet */
-};
-
 typedef struct _DeviceConfig
 {
 	unsigned long nDhcpEnabled;// = 1;// 0 or 1;
@@ -38,10 +30,7 @@ typedef struct _DeviceConfig
 void LwipInit(void);
 void LwipStop(void);
 
-extern int tcpip_inloop(void);
-void InitDevInfo(void);
-
-void NotifyFromEthISR(void);
+void InitDevInfo(unsigned long* cpuSN);
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 // Network
