@@ -112,6 +112,9 @@ This project originated from [`straight-httpd`](https://github.com/straight-codi
 //0 No debug,1 Error,2 State change,3 Informational,4 Verbose
 #define MBEDTLS_DEBUG_LEVEL                    1
 
+//The following functions use fixed data as the entropy seed. 
+//This data is used only for experimental purposes 
+//   and it is strongly recommended that it MUST not be used for the official products.
 extern int mbedtls_platform_std_nv_seed_read(unsigned char *buf, unsigned int buf_len);
 extern int mbedtls_platform_std_nv_seed_write(unsigned char *buf, unsigned int buf_len);
 
