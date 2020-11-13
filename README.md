@@ -140,14 +140,14 @@ extern int mbedtls_platform_std_nv_seed_write(unsigned char *buf, unsigned int b
 //redirect all http request to https
 #define ALWAYS_REDIRECT_HTTPS	 1
 
-//"keep-alive" will reuse existing connections and occupy more connection resources and memory
-//set "close" to close connection after used to free memory.
+//"keep-alive" will reuse existing connections and occupy more connection resources and memory, recommended for HTTPS
+//set "close" to close connection after used to free memory, recommended for http. 
 #define CONNECTION_HEADER      "keep-alive" //"close"
 
 //interface to get system tick counter
 #define LWIP_GetTickCount     BSP_GetTickCount
 
-//max. number of http connections
+//max. number of http connections. increase MAX_CONNECTIONS when CONNECTION_HEADER is "keep-alive"
 #define MAX_CONNECTIONS        4
 ```
 
