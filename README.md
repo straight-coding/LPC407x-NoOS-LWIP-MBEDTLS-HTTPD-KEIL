@@ -11,6 +11,6 @@ This project originated from [`straight-httpd`](https://github.com/straight-codi
 * RTC: clock, used for log timing.
 * ENET: configured, but not used.
 
-# MAC Generator
-* Every LPC4078 chip has a unique identification number which can be used to generate MAC address.
+# MAC Address Generator
+* Every LPC4078 chip has a unique identification number which can be read by IAP and used to generate the MAC address.
 
