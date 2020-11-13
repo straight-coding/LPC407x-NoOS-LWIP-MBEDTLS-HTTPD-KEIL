@@ -123,34 +123,34 @@ extern int mbedtls_platform_std_nv_seed_write(unsigned char *buf, unsigned int b
 * lwip-port/lpc407x/arch/sys_arch.h
  ```
  //There is no local file system in this project
- #define LOCAL_FILE_SYSTEM	0
+ #define LOCAL_FILE_SYSTEM     0
  ```
 * lwip-port/lpc407x/lwip_api.c
  ```
  //The key size of the server ceritificate.
  //use 512 bits because there is no hardware cryptographic engines.
- #define KEYSIZE		512
+ #define KEYSIZE               512
  ```
 * httpd/http_core.h
 ```
 //redirect all http request to https
-#define ALWAYS_REDIRECT_HTTPS	1
+#define ALWAYS_REDIRECT_HTTPS	 1
 
 //"keep-alive" will reuse existing connections and occupy more connection resources and memory
 //set "close" to close connection after used to free memory.
-#define CONNECTION_HEADER	"keep-alive" //"close"
+#define CONNECTION_HEADER      "keep-alive" //"close"
 
 //interface to get system tick counter
-#define LWIP_GetTickCount 	BSP_GetTickCount
+#define LWIP_GetTickCount     BSP_GetTickCount
 
 //max. number of http connections
-#define MAX_CONNECTIONS 				4
+#define MAX_CONNECTIONS        4
 ```
 
 * httpd/http_fs.c
 ```
 //used fake files to test file transfer performance including uploading and downloading
-#define FAKE_FS		1
+#define FAKE_FS                1
 ```
 
 # Web Access Demo
