@@ -7,6 +7,10 @@ This project originated from [`straight-httpd`](https://github.com/straight-codi
 * `GPIO P4.23` for LED：Clear this PIN to light the LED and set this PIN to turn off the LED.(在 DHCP 获得 IP 之前闪烁间隔0.5s，拿到 IP 地址后间隔为1s)
 
 # Configured Interrupts
-* System Tick Timer: tick/1ms, 64-bit tick counter is used for timeout check
-* RTC: clock
+* System Tick Timer: tick/1ms, 64-bit tick counter is used for timeout check.
+* RTC: clock, used for log timing.
 * ENET: configured, but not used.
+
+# MAC Generator
+* Every LPC4078 chip has a unique identification number which can be used to generate MAC address.
+
