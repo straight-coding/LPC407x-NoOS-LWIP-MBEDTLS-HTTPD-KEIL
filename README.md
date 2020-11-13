@@ -20,6 +20,8 @@ This project originated from [`straight-httpd`](https://github.com/straight-codi
 # Configuration for lwip
 * lwip-port/lpc407x/lwipopts.h
 ```
+#define NO_SYS                  1
+
 /* MEMP_MEM_MALLOC==1: Use mem_malloc/mem_free instead of the lwip pool allocator.
  * Especially useful with MEM_LIBC_MALLOC but handle with care regarding execution
  * speed (heap alloc can be much slower than pool alloc) and usage from interrupts
@@ -123,5 +125,29 @@ extern int mbedtls_platform_std_nv_seed_read(unsigned char *buf, unsigned int bu
 extern int mbedtls_platform_std_nv_seed_write(unsigned char *buf, unsigned int buf_len);
 
 ```
+# Preprocessor
+* lwip-port/lpc407x/arch/sys_arch.h
+ ```
+ #define LOCAL_FILE_SYSTEM	0
+ ```
+* lwip-port/lpc407x/lwip_api.c
+ ```
+ #define KEYSIZE		512
+ ```
+* httpd/http_core.h
+```
+#define ALWAYS_REDIRECT_HTTPS	1
+#define CONNECTION_HEADER	"keep-alive" //"close"
+#define LWIP_GetTickCount 	BSP_GetTickCount
+#define MAX_CONNECTIONS 				4
+```
+
+* httpd/http_fs.c
+```
+#define FAKE_FS		1
+```
 
 # Web Demo
+
+* httpd/cgi/cgi_upload.c
+* httpd/cgi/cgi_files.c
