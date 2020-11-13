@@ -56,7 +56,7 @@ This project originated from [`straight-httpd`](https://github.com/straight-codi
 ```
 
 # Configuration for mbedtls
-* mbedtls/include/config_user.h
+* mbedtls/include/config_user.h, options defined in this file will overwrite the existed
 ```
 ///////////////////////////////////////////////////////////////////////////////////////
 // disable MICRO
@@ -84,9 +84,9 @@ This project originated from [`straight-httpd`](https://github.com/straight-codi
 #define MBEDTLS_NO_PLATFORM_ENTROPY
 #define MBEDTLS_ENTROPY_NV_SEED
 #define MBEDTLS_ENTROPY_C
-#define ALTCP_MBEDTLS_RNG_FN					mbedtls_entropy_func 
-#define MBEDTLS_PLATFORM_NV_SEED_READ_MACRO		mbedtls_platform_std_nv_seed_read
-#define MBEDTLS_PLATFORM_NV_SEED_WRITE_MACRO	mbedtls_platform_std_nv_seed_write
+#define ALTCP_MBEDTLS_RNG_FN                   mbedtls_entropy_func 
+#define MBEDTLS_PLATFORM_NV_SEED_READ_MACRO    mbedtls_platform_std_nv_seed_read
+#define MBEDTLS_PLATFORM_NV_SEED_WRITE_MACRO   mbedtls_platform_std_nv_seed_write
 
 #define MBEDTLS_HAVE_ASM
 
@@ -95,22 +95,22 @@ This project originated from [`straight-httpd`](https://github.com/straight-codi
 #define MBEDTLS_PLATFORM_MEMORY
 #define MBEDTLS_PLATFORM_C
 
-#define MBEDTLS_SSL_MAX_CONTENT_LEN             16384
-#define MBEDTLS_SSL_IN_CONTENT_LEN              16384
+#define MBEDTLS_SSL_MAX_CONTENT_LEN            16384
+#define MBEDTLS_SSL_IN_CONTENT_LEN             16384
 
 #ifdef _WIN32
-#define MBEDTLS_SSL_OUT_CONTENT_LEN             16384
+#define MBEDTLS_SSL_OUT_CONTENT_LEN            16384
 #undef  MBEDTLS_PLATFORM_NO_STD_FUNCTIONS
 #else
-#define MBEDTLS_SSL_OUT_CONTENT_LEN             1024    //16384
+#define MBEDTLS_SSL_OUT_CONTENT_LEN            1024    //16384
 #define MBEDTLS_PLATFORM_NO_STD_FUNCTIONS
 
-#define MBEDTLS_PLATFORM_SNPRINTF_MACRO			snprintf
-#define MBEDTLS_PLATFORM_VSNPRINTF_MACRO		vsnprintf
+#define MBEDTLS_PLATFORM_SNPRINTF_MACRO        snprintf
+#define MBEDTLS_PLATFORM_VSNPRINTF_MACRO       vsnprintf
 #endif
 
 //0 No debug,1 Error,2 State change,3 Informational,4 Verbose
-#define MBEDTLS_DEBUG_LEVEL 					1
+#define MBEDTLS_DEBUG_LEVEL                    1
 
 extern int mbedtls_platform_std_nv_seed_read(unsigned char *buf, unsigned int buf_len);
 extern int mbedtls_platform_std_nv_seed_write(unsigned char *buf, unsigned int buf_len);
