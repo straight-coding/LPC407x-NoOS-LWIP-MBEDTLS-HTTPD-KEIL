@@ -155,5 +155,5 @@ extern int mbedtls_platform_std_nv_seed_write(unsigned char *buf, unsigned int b
 
 # Web Demo
 
-* httpd/cgi/cgi_upload.c
-* httpd/cgi/cgi_files.c
+* httpd/cgi/cgi_upload.c, for uploading test, data will be discarded when received.
+* httpd/cgi/cgi_files.c, for downloading test, fixed data will be trandferred
