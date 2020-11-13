@@ -5,3 +5,8 @@ This project originated from [`straight-httpd`](https://github.com/straight-codi
 * `SDRAM`: 16MB @ 0xA0000000
 * `Ethernet PHY`: KSZ8041NL. This project also supports other PHYs and can automatically identify DP83848C and DM9161A as well. (该项目可以自动识别三种PHY芯片)
 * `GPIO P4.23` for LED：Clear this PIN to light the LED and set this PIN to turn off the LED.(在 DHCP 获得 IP 之前闪烁间隔0.5s，拿到 IP 地址后间隔为1s)
+
+# Configured Interrupts
+* System Tick Timer: tick/1ms, 64-bit tick counter is used for timeout check
+* RTC: clock
+* ENET: configured, but not used.
