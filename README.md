@@ -1,6 +1,6 @@
 # LPC407x-NoOS-LWIP-MBEDTLS-HTTPD-KEIL
 
-The project originated from [`straight-httpd`](https://github.com/straight-coding/straight-httpd), but it works on an real embedded platform. This project is implemented on an evaluation board and the following is the hardware configuration. (该项目是 straight-httpd 的后续之作，将 Windows 模拟环境的代码移植到真实的嵌入式系统，基于从简到繁的原则，本项目未采用RTOS，后续再增加对 RTOS 的支持).
+This project originated from [`straight-httpd`](https://github.com/straight-coding/straight-httpd), but it works on an real embedded platform. This project is implemented on an evaluation board and the following is the hardware configuration. (该项目是 straight-httpd 的后续之作，将 Windows 模拟环境的代码移植到真实的嵌入式系统，基于从简到繁的原则，本项目未采用RTOS，后续再增加对 RTOS 的支持).
 * `MCU`: NXP LPC4078-FET208, Cortex-M4
 * `SDRAM`: 16MB @ 0xA0000000
 * `Ethernet PHY`: KSZ8041NL. This project also supports other PHYs and can automatically identify DP83848C and DM9161A as well. (该项目可以自动识别三种PHY芯片)
