@@ -20,7 +20,8 @@ This project originates from [`straight-httpd`](https://github.com/straight-codi
 # Configuration for lwip
 * lwip-port/lpc407x/lwipopts.h
 ```
-//If there is no external SDRAM, https can not work because there is only 64kB on-chip RAM available.
+//If there is no external SDRAM, https can not work because there is only 64kB on-chip RAM available. 
+//(支持https需要更多的内存RAM，如果内存不足128kB建议ENABLE_HTTPS设置为0，即仅支持HTTP)
 #define ENABLE_HTTPS      1
 
 //No RTOS
@@ -44,6 +45,7 @@ This project originates from [`straight-httpd`](https://github.com/straight-codi
 
 //use smaller tcp segment to reduce the memory requirement.
 //as the segment size decreases, the throughput will decrease too.
+//(如果仅用HTTP，MSS可以再减小，以减少内存开销)
 #undef TCP_MSS
 #define TCP_MSS           800//(1500 - 40)	  /* TCP_MSS = (Ethernet MTU - IP header size - TCP header size) */
 
@@ -51,6 +53,7 @@ This project originates from [`straight-httpd`](https://github.com/straight-codi
 //for HTTP, default TCP_WND is OK
 //for HTTPS, TCP_WND should be greater than MBEDTLS_SSL_MAX_CONTENT_LEN for uploading huge data
 //    please refer to the comments about MBEDTLS_SSL_MAX_CONTENT_LEN in file mbedtls/include/config.h
+//(如果仅用HTTP，WND可以采用默认值，如果使用https，则不得少于MBEDTLS_SSL_MAX_CONTENT_LEN，否则大文件（固件升级）上载会失败)
 #undef TCP_WND
 #if (ENABLE_HTTPS > 0)
 #define TCP_WND          (22 * TCP_MSS) //TCP_WND >= MBEDTLS_SSL_MAX_CONTENT_LEN
@@ -75,6 +78,7 @@ This project originates from [`straight-httpd`](https://github.com/straight-codi
 #undef  MBEDTLS_SSL_DTLS_CLIENT_PORT_REUSE
 #undef  MBEDTLS_SSL_DTLS_BADMAC_LIMIT
 
+//如果仅仅是网页应用，不需要大文件上载（如固件升级），则可以采用下面这项
 #undef  MBEDTLS_SSL_VARIABLE_BUFFER_LENGTH
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -119,6 +123,7 @@ This project originates from [`straight-httpd`](https://github.com/straight-codi
 //The following functions use fixed data as the entropy seed. 
 //This seed is used only for experimental purposes 
 //   and it is strongly recommended that it MUST not be used for the official products.
+//mbedtls_platform_std_nv_seed_read读取的随机数种子数据，可以用随机事件积累产生
 extern int mbedtls_platform_std_nv_seed_read(unsigned char *buf, unsigned int buf_len);
 extern int mbedtls_platform_std_nv_seed_write(unsigned char *buf, unsigned int buf_len);
 
@@ -140,20 +145,24 @@ extern int mbedtls_platform_std_nv_seed_write(unsigned char *buf, unsigned int b
 //redirect all http request to https
 #define ALWAYS_REDIRECT_HTTPS	 1
 
-//"keep-alive" will reuse existing connections and occupy more connection resources and memory
-//set "close" to close connection after used to free memory.
+//"keep-alive" will reuse existing connections and occupy more connection resources and memory, recommended for HTTPS
+//set "close" to close connection after used to free memory, recommended for http. 
+//若无加密硬件支持，则https建立连接的过程非常慢，因此建议重复使用连接，但会长时间占用更多并发连接数和内存
+//如果仅用http，则建议用“close”以快速释放内存
 #define CONNECTION_HEADER      "keep-alive" //"close"
 
 //interface to get system tick counter
 #define LWIP_GetTickCount     BSP_GetTickCount
 
-//max. number of http connections
+//max. number of http connections. increase MAX_CONNECTIONS when CONNECTION_HEADER is "keep-alive"
+//如果CONNECTION_HEADER 设为 "keep-alive"，则需要适当增加 MAX_CONNECTIONS，因为有些浏览器会同时使用多达4个以上的连接
 #define MAX_CONNECTIONS        4
 ```
 
 * httpd/http_fs.c
 ```
-//used fake files to test file transfer performance including uploading and downloading
+//use fake files to test file transfer performance including uploading and downloading
+//虚假的文件用于测试上载和下载传输性能
 #define FAKE_FS                1
 ```
 
@@ -183,6 +192,10 @@ LR_IROM1 0x00000000 0x00080000  {    ; load region size_region, for work code
   }
 }
 ```
+
+# Update Web Pages
+* Web pages and scripts are located in `httpd/webroot`.
+* `buildfs.bat` can be used to convert web pages and scripts into `httpd/fs_data.c`, then rebuild the firmware with all changes included.
 
 # More Details
 * Please see the document of project [`straight-httpd`](https://github.com/straight-coding/straight-httpd)
