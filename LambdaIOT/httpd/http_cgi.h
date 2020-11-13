@@ -24,6 +24,8 @@
 #define MAX_CGI_PATH		64
 #define MAX_TAG_LEN			64
 
+#define MAX_CONN_PER_IP         2
+
 #define CGI_OPT_AUTH_REQUIRED	0x40000000	//MUST request with token header named 'X-Auth-Token'
 
 #define CGI_OPT_PREFIX_WILDCARD	0x08000000	//path with * wildcard

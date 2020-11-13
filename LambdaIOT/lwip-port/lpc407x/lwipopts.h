@@ -207,7 +207,7 @@ a lot of data that needs to be copied, this should be set high. */
 #define LWIP_AUTOIP						0
 #define LWIP_IGMP						1
 
-#define TCP_LISTEN_BACKLOG              4
+#define TCP_LISTEN_BACKLOG              1
 
 #define LWIP_SINGLE_NETIF				1
 
