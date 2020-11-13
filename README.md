@@ -7,10 +7,13 @@ This project originated from [`straight-httpd`](https://github.com/straight-codi
 * `GPIO P4.23` for LED：Clear this PIN to light the LED and set this PIN to turn off the LED.(在 DHCP 获得 IP 之前闪烁间隔0.5s，拿到 IP 地址后间隔为1s)
 
 # Configured Interrupts
-* System Tick Timer: tick/1ms, 64-bit tick counter is used for timeout check.
-* RTC: clock, used for log timing.
-* ENET: configured, but not used.
+* System Tick Timer: tick/1ms, 64-bit tick counter is used for timeout check. (毫秒定时用于通信超时处理)
+* RTC: clock, used for log timing.(实时钟用于日志的时戳)
+* ENET: configured, but not used.(网络中断虽已配置，但并无功能，接收入口放在主循环中询查)
 
 # MAC Address Generator
-* Every LPC4078 chip has a unique identification number which can be read by IAP and used to generate the MAC address.
+* Every LPC4078 chip has a unique identification number which can be read by IAP and used to generate the MAC address.(每颗CPU都有全球唯一的ID，可用于产生其他ID、或MAC地址)
+
+# Debug Log Redirector
+* When the protocol stack is ready with a valid IP, an UDP based socket is created to broadcast log information to port 8899. (协议栈跑起来后，所有日志可以通过UDP广播到端口8899，采用网络日志的原因是：网络DMA速度非常快，足于支持大量日志的发送，而对网络通信影响并不大)
 
