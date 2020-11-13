@@ -20,11 +20,11 @@ This project originated from [`straight-httpd`](https://github.com/straight-codi
 # Configuration for lwip
 * lwip-port/lpc407x/lwipopts.h
 ```
-#define NO_SYS                  1
+#define NO_SYS            1
 
 //always use the lwip allocator for both lwip and mbedtls.
 #undef  MEMP_MEM_MALLOC
-#define MEMP_MEM_MALLOC 		1 //Only one can be selected with MEM_USE_POOLS
+#define MEMP_MEM_MALLOC   1 //Only one can be selected with MEM_USE_POOLS
 
 //do not use memory pool
 #undef  MEM_USE_POOLS
