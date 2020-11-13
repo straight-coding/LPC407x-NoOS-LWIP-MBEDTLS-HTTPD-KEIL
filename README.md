@@ -22,46 +22,37 @@ This project originated from [`straight-httpd`](https://github.com/straight-codi
 ```
 #define NO_SYS                  1
 
-/* MEMP_MEM_MALLOC==1: Use mem_malloc/mem_free instead of the lwip pool allocator.
- * Especially useful with MEM_LIBC_MALLOC but handle with care regarding execution
- * speed (heap alloc can be much slower than pool alloc) and usage from interrupts
- * (especially if your netif driver allocates PBUF_POOL pbufs for received frames
- * from interrupt)!
- * ATTENTION: Currently, this uses the heap for ALL pools (also for private pools,
- * not only for internal pools defined in memp_std.h)! */
+//always use the lwip allocator for both lwip and mbedtls.
 #undef  MEMP_MEM_MALLOC
 #define MEMP_MEM_MALLOC 		1 //Only one can be selected with MEM_USE_POOLS
 
-/* MEM_USE_POOLS==1: Use an alternative to malloc() by allocating from a set
- * of memory pools of various sizes. When mem_malloc is called, an element of
- * the smallest pool that can provide the length needed is returned.
- * To use this, MEMP_USE_CUSTOM_POOLS also has to be enabled. */
+//do not use memory pool
 #undef  MEM_USE_POOLS
-#define MEM_USE_POOLS           0 //Only one can be selected with MEMP_MEM_MALLOC
+#define MEM_USE_POOLS     0 //Only one can be selected with MEMP_MEM_MALLOC
 
-/* MEM_SIZE: the size of the heap memory. If the application will send
-a lot of data that needs to be copied, this should be set high. */
-//100KB to support large file downloading and uploading, and keep-alive works good
-//57KB basic memory to create TLS connections, and support large file downloading and uploading, but keep-alive may fail
+//total memory size for the lwip allocator, and HTTPS may need much more memory
 #undef  MEM_SIZE
 #if (ENABLE_HTTPS > 0)
-#define MEM_SIZE                (100*1024) 
+#define MEM_SIZE          (100*1024) 
 #else
-#define MEM_SIZE                (24*1024) 
+#define MEM_SIZE          (24*1024) 
 #endif
 
-/* TCP Maximum segment size. http://lwip.wikia.com/wiki/Tuning_TCP */
+//use smaller tcp segment to reduce the memory requirement.
+//as the segment size decreases, the throughput will decrease too.
 #undef TCP_MSS
-#define TCP_MSS                 800//(1500 - 40)	  /* TCP_MSS = (Ethernet MTU - IP header size - TCP header size) */
+#define TCP_MSS           800//(1500 - 40)	  /* TCP_MSS = (Ethernet MTU - IP header size - TCP header size) */
 
-/* TCP receive window. */
+//TCP receive window.
+//for HTTP, default TCP_WND is OK
+//for HTTPS, TCP_WND should be greater than MBEDTLS_SSL_MAX_CONTENT_LEN for uploading huge data
+//    please refer to the comments about MBEDTLS_SSL_MAX_CONTENT_LEN in file mbedtls/include/config.h
 #undef TCP_WND
 #if (ENABLE_HTTPS > 0)
-#define TCP_WND                 (22 * TCP_MSS) //TCP_WND >= MBEDTLS_SSL_MAX_CONTENT_LEN
+#define TCP_WND          (22 * TCP_MSS) //TCP_WND >= MBEDTLS_SSL_MAX_CONTENT_LEN
 #else
-#define TCP_WND                 (4 * TCP_MSS) //TCP_WND >= MBEDTLS_SSL_MAX_CONTENT_LEN
+#define TCP_WND          (4 * TCP_MSS) //TCP_WND >= MBEDTLS_SSL_MAX_CONTENT_LEN
 #endif
-
 ```
 
 # Configuration for mbedtls
