@@ -255,7 +255,7 @@ void CGI_SetResponseHeaders(REQUEST_CONTEXT* context, char* HttpCodeInfo) //set 
 
 	//redirect header
 	if (context->_result == CODE_REDIRECT)
-		LWIP_sprintf(context->ctxResponse._sendBuffer, (char*)header_generic, "200 OK", "text/html", strlen(redirect_body1) + strlen(redirect_body2) + strlen(context->_responsePath), CONNECTION_HEADER);
+		LWIP_sprintf(context->ctxResponse._sendBuffer, (char*)header_generic, "200 OK", "text/html", strlen(redirect_body1) + strlen(redirect_body2) + strlen(context->_responsePath), "close");
 
 	if ((context->handler != NULL) && (context->handler->SetResponseHeaders != NULL))
 		context->handler->SetResponseHeaders(context, HttpCodeInfo);
