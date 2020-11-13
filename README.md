@@ -161,7 +161,7 @@ extern int mbedtls_platform_std_nv_seed_write(unsigned char *buf, unsigned int b
 
 * httpd/http_fs.c
 ```
-//used fake files to test file transfer performance including uploading and downloading
+//use fake files to test file transfer performance including uploading and downloading
 //虚假的文件用于测试上载和下载传输性能
 #define FAKE_FS                1
 ```
