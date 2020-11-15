@@ -1232,6 +1232,11 @@
               <FileType>5</FileType>
               <FilePath>.\lwip-port\lpc407x\arch\cpu.h</FilePath>
             </File>
+            <File>
+              <FileName>lwip_cert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\lwip-port\lpc407x\lwip_cert.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2568,6 +2573,11 @@
               <FileName>cpu.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\lwip-port\lpc407x\arch\cpu.h</FilePath>
+            </File>
+            <File>
+              <FileName>lwip_cert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\lwip-port\lpc407x\lwip_cert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3908,6 +3918,11 @@
               <FileType>5</FileType>
               <FilePath>.\lwip-port\lpc407x\arch\cpu.h</FilePath>
             </File>
+            <File>
+              <FileName>lwip_cert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\lwip-port\lpc407x\lwip_cert.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5246,6 +5261,11 @@
               <FileName>cpu.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\lwip-port\lpc407x\arch\cpu.h</FilePath>
+            </File>
+            <File>
+              <FileName>lwip_cert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\lwip-port\lpc407x\lwip_cert.c</FilePath>
             </File>
           </Files>
         </Group>

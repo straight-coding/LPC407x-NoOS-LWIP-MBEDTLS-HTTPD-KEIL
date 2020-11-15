@@ -42,10 +42,14 @@ extern void SetLongIP(u32_t addr);
 extern void SetGateway(u32_t addr);
 extern void SetSubnet(u32_t addr);
 
+extern const char *privkey;
+extern const char *cert;
+
+static const char *privkey_pass = "";
+
+#if 0
 #if (LWIP_ALTCP_TLS > 0)
 #define KEYSIZE		512
-
-static const char *privkey_pass = "straight";
 
 #if (KEYSIZE == 512)
 static const char *privkey = "-----BEGIN ENCRYPTED PRIVATE KEY-----\n"\
@@ -106,7 +110,7 @@ static const char *cert = "-----BEGIN CERTIFICATE-----\n"\
 	"P9jV/z8GctLSbsCRH9SZHktF2pqNq87cSTPUx5VPWoOiluMZtqjCO9g13yRv5qk=\n"\
 	"-----END CERTIFICATE-----\n";
 #endif
-
+#endif
 #endif
 
 struct netif main_netif;
