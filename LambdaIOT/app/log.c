@@ -28,6 +28,9 @@ void LogPrint(int level, char* format, ... )
 	
 	va_list ap;
 	
+	if (level > 0)
+		return;
+	
 	if ((SCB->ICSR & SCB_ICSR_VECTACTIVE_Msk) != 0)
 		return; //if in interrupt mode
 
