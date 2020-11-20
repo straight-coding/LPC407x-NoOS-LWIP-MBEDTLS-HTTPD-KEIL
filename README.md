@@ -14,10 +14,12 @@ This project originates from [`straight-httpd`](https://github.com/straight-codi
 # MAC Address Generator
 * Every LPC4078 chip has a unique identification number which can be read by IAP and used to generate the MAC address.(每颗CPU都有全球唯一的ID，可用于产生其他ID、或MAC地址)
 
-# Debug Log Redirector
-* When the protocol stack is ready with a valid IP, an UDP based socket is created to broadcast log information to port 8899. (协议栈跑起来后，所有日志可以通过UDP广播到端口8899，采用网络日志的原因是：网络DMA速度非常快，足于支持大量日志的发送，而对网络通信影响并不大)
+# Tools
+* **Debug Log Receiver**: When the protocol stack is ready with a valid IP, an UDP based socket is created to broadcast log information to port 8899. (协议栈跑起来后，所有日志可以通过UDP广播到端口8899，采用网络日志的原因是：网络DMA速度非常快，足于支持大量日志的发送，而对网络通信影响并不大)
 
-* A debug tool [**EmbedTools**](https://github.com/straight-coding/EmbedTools) can be used to receive the log from the device and generate the pem file named `lwip_cert.c`. (EmbedTools是一个开发辅助工具包，用于收听来自设备的基于UDP的网络日志，也可以用这个工具产生 PEM 格式的自签服务器证书)
+* **Certificate Tool**: A debug tool [**EmbedTools**](https://github.com/straight-coding/EmbedTools) can be used to receive the log from the device and generate the pem file named `lwip_cert.c`. (EmbedTools是一个开发辅助工具包，用于收听来自设备的基于UDP的网络日志，也可以用这个工具产生 PEM 格式的自签服务器证书)
+
+* **Web Pages Compressor**: A packing tool [**EmbedTools**](https://github.com/straight-coding/EmbedTools) can be also used to compress web pages and convert to a c source file named `fs_data.c`. (EmbedTools是一个开发辅助工具包，包含一个网页压缩工具，并转换成c源文件)
 
 # Configuration for lwip
 * lwip-port/lpc407x/lwipopts.h
