@@ -18,7 +18,7 @@ This project originates from [`straight-httpd`](https://github.com/straight-codi
 **EmbedTools** includes three tools:
 * `Debug Log Receiver`: Used to receive logs from the device. When the device is ready with a valid IP, an UDP based socket will be created to broadcast log information to the remote port 8899.(设备的协议栈跑起来后，所有日志将通过UDP广播到远端口8899，采用网络日志的原因是：网络DMA速度非常快，足于支持大量日志的发送，而对网络通信影响并不大)
 
-* `Certificate Tool`: used generate the pem file named `lwip_cert.c`. (也可以用这个工具产生 PEM 格式的自签服务器证书)
+* `Certificate Tool`: used to generate the pem file named `lwip_cert.c`. (也可以用这个工具产生 PEM 格式的自签服务器证书)
 
 * `Web Pages Compressor`: used to compress web pages and convert to a c source file named `fs_data.c`. (gzip压缩网页，并转换成c源文件)
 
