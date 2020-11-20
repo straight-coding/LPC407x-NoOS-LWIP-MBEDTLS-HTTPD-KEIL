@@ -3,7 +3,7 @@
 #ifndef __LWIPOPTS_H__
 #define __LWIPOPTS_H__
 
-#define ENABLE_HTTPS	1
+#define ENABLE_HTTPS	0
 
 /*
    if lwip is used with mbedtls package, there are three options that need to be set carefully.

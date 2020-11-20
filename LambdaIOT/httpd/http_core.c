@@ -168,9 +168,9 @@ void SetupHttpContext(void)
 static REQUEST_CONTEXT* GetHttpContext(unsigned long ipRemote, int portRemote)
 {
 	int i;
-	int nCount = 0;
 	
 #if (MAX_CONN_PER_IP > 0)
+	int nCount = 0;
 	for(i = 0; i < MAX_CONNECTIONS; i ++)
 	{
 		if (g_httpContext[i]._pcb != NULL)

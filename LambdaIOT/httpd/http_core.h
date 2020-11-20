@@ -30,7 +30,7 @@
 #define ALWAYS_REDIRECT_HTTPS	0
 #endif
 
-#define LOG_DEBUG_ONLY			0 //max level of debug output
+#define LOG_DEBUG_ONLY		1 //max level of debug output
 
 #define METHOD_GET			1 //request method GET
 #define METHOD_POST			2 //request method POST
@@ -47,7 +47,7 @@
 #define CODE_ENTITYTOOLARGE	-413	//Payload Too Large (RFC 7231)
 #define CODE_URITOOLONG		-414	//URI Too Long (RFC 7231)
 
-#ifdef WIN32
+#if defined(WIN32) || (ENABLE_HTTPS == 0)
 #define CONNECTION_HEADER	"close"
 #else
 #define CONNECTION_HEADER	"keep-alive" //"close"
