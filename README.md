@@ -201,6 +201,7 @@ LR_IROM1 0x00000000 0x00080000  {    ; load region size_region, for work code
 # Update Web Pages
 * Web pages and scripts are located in `httpd/webroot`.
 * `buildfs.bat` can be used to convert web pages and scripts into `httpd/fs_data.c`, then rebuild the firmware with all changes included.
+* The easiest way is to use `EmbedTools` to generate file `httpd/fs_data.c`.
 
 # More Details
 * Please see the document of project [`straight-httpd`](https://github.com/straight-coding/straight-httpd)
