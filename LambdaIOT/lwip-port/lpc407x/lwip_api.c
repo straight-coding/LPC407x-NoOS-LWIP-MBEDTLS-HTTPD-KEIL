@@ -45,74 +45,6 @@ extern void SetSubnet(u32_t addr);
 extern const char *privkey;
 extern const char *cert;
 
-static const char *privkey_pass = "";
-
-#if 0
-#if (LWIP_ALTCP_TLS > 0)
-#define KEYSIZE		512
-
-#if (KEYSIZE == 512)
-static const char *privkey = "-----BEGIN ENCRYPTED PRIVATE KEY-----\n"\
-	"MIIBpjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQIGPULjavQsEgCAggA\n"\
-	"MBQGCCqGSIb3DQMHBAhzhjxyhEJ7NgSCAWBihB0wi33LrSzyWYUjmBc2DmIo9FgB\n"\
-	"AK51vUyljP7XbSUE9lfSenRCf2bCtHlOe/x1crRmnI8Tr8F5iw6mOBEfJ6orROdy\n"\
-	"NAjNMNZXu76tIYjkblRuMSzXDNoQzH/dKxN1KMojtsKQbG2EcQVfG0GlQypXstgr\n"\
-	"ajJp57MZy0BKGXaWYUc+9Vgda8SLxWNLRy5wNwSBmN02ZxjT5t5zpYaUaUB1WFY4\n"\
-	"6pIMgmynn636boOF2VHXQdRTJbcn76hsJYkVQhERB/z8yYKIhl0Y8Jag3Wm151wt\n"\
-	"gXwZivq7cVwgk7TWuE15NJQQKRNo1GMbkMLyaHLIQwvLeXYeul38ryxXm5CtvmG+\n"\
-	"VmndzTSd6H1kJcgv2mTlH7deajEgNO2JMLSEYQRv0AJyVwdgJauWu3iz7+0W1iAD\n"\
-	"r2q+8CrzT1HhNdRoDLs28gwQ/f48XG8Erfg1ZZfUuQCNrYL1wATTs+wy\n"\
-	"-----END ENCRYPTED PRIVATE KEY-----\n";
-
-static const char *cert = "-----BEGIN CERTIFICATE-----\n"\
-	"MIIBhjCCATCgAwIBAgIQuY9Og0ylhpRIUZV9sJFi5DANBgkqhkiG9w0BAQsFADAR\n"\
-	"MQ8wDQYDVQQDEwZDQVJvb3QwHhcNMjAxMDI0MDcwMDAwWhcNMzAxMDI0MDcwMDAw\n"\
-	"WjAaMRgwFgYDVQQDEw9zZXJ2ZXIuc3RyYWlnaHQwXDANBgkqhkiG9w0BAQEFAANL\n"\
-	"ADBIAkEA44T2OhYNX5CAVfP3aB7xC8XpIIRvST0JGeRptFWv7MiMsrI/Ewe/Lt+K\n"\
-	"ImUPDZwSzhJ4YEqMfOjclKPV06bf3QIDAQABo1swWTATBgNVHSUEDDAKBggrBgEF\n"\
-	"BQcDATBCBgNVHQEEOzA5gBB4pVILJFLqT8sdQXmk6FaWoRMwETEPMA0GA1UEAxMG\n"\
-	"Q0FSb290ghASHfUmS8dmi0SWS8hDV/pFMA0GCSqGSIb3DQEBCwUAA0EAQfkZZ2l1\n"\
-	"YCu7PHQBVwC6BFF8Pq5FfxpzFm2xFJ/hMI9U2xmSbLdWclCiy0fXNTW+yl4TKgbk\n"\
-	"EMYAWHOUwlBsTA==\n"\
-	"-----END CERTIFICATE-----\n";
-#endif
-
-#if (KEYSIZE == 1024)
-static const char *privkey = "-----BEGIN ENCRYPTED PRIVATE KEY-----\n"\
-	"MIICxjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQICZi2OGpU2lkCAggA\n"\
-	"MBQGCCqGSIb3DQMHBAgSQEOgHjn0zQSCAoDr9oboaJBu+dZbTFCauetynjG3djiX\n"\
-	"inTaCQ+cJb/mAJqcIqxypz6DH/VU5blq3p6HSNwp8f3olxfuOMEnCJkHXaRZeh0f\n"\
-	"Fib8eBoS8BPMFbqyI68Aua1rIBRrkkGARFGvGaFun4qYaV1mEEcBrox7HHrzE3cH\n"\
-	"meT1aNK+ucXKeqAv0X9xw9zJhsf2e6x3uAbg1ZF63UbCN330W4ZLin7PdS81OLhf\n"\
-	"wGU7H2YUrqDEMH7B/g4/VAymhIVHu2B5eEYuWc55KnsrqREA0mZuEwHGiMzyTek3\n"\
-	"YMrhJDRDU1nOonq57tmek43anxsnnDw2t1D0SR4xbOFSW6kxzfhgpM5hU1w6fNkX\n"\
-	"4HpZWNfYlCCmH3cfmVMWrkbQWyLANqsApKAQL8y2KdrmCXxjPEVQclTIRKGWMy6X\n"\
-	"GLc2JxHekqU86pN6D+lo6E6XAsoGOm/1LexMzcNsEVhiWIWXDG0e9mdizwmouWl/\n"\
-	"Gw18vUVqkSmgJuUCZ7FMfa6THB9CSnXFDkH2/8XvMX8QYQj+83JefCUkDhYgDGCa\n"\
-	"NQATsnAg23YcYy6Jhd4Ft/sM+SBuzTWFeoeoSzTPQT+1Bxt/pWMl7kVf8JUUz0FV\n"\
-	"wyBCUm52pjieqfCUTMcZDeouhnQdq+wE+ZV7XtLt2CJl0grc/JB9A3cwVy43XQ/i\n"\
-	"f0UxRfKcgUI/UG83FpEzQaFcwoXi3/+S0qg3Nk4G0mAAIi2KfgFiIqStTyIWorWn\n"\
-	"A+1Ibheu3wAJxRpUJEyq8YJN/VKz65LSGSZGntrXKJbvlCo7XTZMS8No3JxT5+id\n"\
-	"OG0ttzydqRaCicQ4wbh+e5uQ6DCyNQfxbaZIwfeeVNC9aQ5GbiExbSH8\n"\
-	"-----END ENCRYPTED PRIVATE KEY-----\n";
-
-static const char *cert = "-----BEGIN CERTIFICATE-----\n"\
-	"MIICCzCCAXSgAwIBAgIQph/1VIEBq6BPQba4fDUF0zANBgkqhkiG9w0BAQsFADAR\n"\
-	"MQ8wDQYDVQQDEwZDQVJvb3QwHhcNMjAwNjA2MDcwMDAwWhcNMzAwNjA2MDcwMDAw\n"\
-	"WjAaMRgwFgYDVQQDEw9zZXJ2ZXIuc3RyYWlnaHQwgZ8wDQYJKoZIhvcNAQEBBQAD\n"\
-	"gY0AMIGJAoGBAMew5lAQoJ6RNsBgvM3JaSd4GEd7LUumVyVnI5Meyv0hAftC+Muo\n"\
-	"fmjlyS9bvHBQEwF2MwRSL1uHXV47J8pIr8g6iN7a7augsIO79x5bOPr+GXO4mXCs\n"\
-	"gRuWeYddcbKHx7IEAcUA78Kc70KAHSnrSNRQQRRv1GVQjgIhaBfjaYjNAgMBAAGj\n"\
-	"WzBZMBMGA1UdJQQMMAoGCCsGAQUFBwMBMEIGA1UdAQQ7MDmAEIIlXCLg5+C1KClr\n"\
-	"DaYFc7yhEzARMQ8wDQYDVQQDEwZDQVJvb3SCELtRJzGDgSqHS7iarn4k5vswDQYJ\n"\
-	"KoZIhvcNAQELBQADgYEAdfty93O6syeOCjcRFVDW+WnVrzB+vRg1zeujUD1EHSNj\n"\
-	"Mf+aMALrZ7NaHpgx3ifbpijuc1l7ZztiSyvz1/c9srcj3W6DHsV5KgmABGbL/bGR\n"\
-	"P9jV/z8GctLSbsCRH9SZHktF2pqNq87cSTPUx5VPWoOiluMZtqjCO9g13yRv5qk=\n"\
-	"-----END CERTIFICATE-----\n";
-#endif
-#endif
-#endif
-
 struct netif main_netif;
 long g_ipIsReady = 0; //
 
@@ -124,6 +56,8 @@ extern void LwipLinkUp(void);
 extern void LwipLinkDown(void);
 
 #if (LWIP_ALTCP_TLS > 0)
+static const char *privkey_pass = "";
+
 extern void mbedtls_debug_set_threshold(int threshold);
 struct altcp_tls_config* getTlsConfig(void)
 {
