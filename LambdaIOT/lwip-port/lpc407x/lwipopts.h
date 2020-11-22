@@ -46,11 +46,11 @@
 
 /* MEM_SIZE: the size of the heap memory. If the application will send
 a lot of data that needs to be copied, this should be set high. */
-//100KB to support large file downloading and uploading, and keep-alive works good
-//57KB basic memory to create TLS connections, and support large file downloading and uploading, but keep-alive may fail
+//100kB to support large file downloading and uploading, and keep-alive works good, 130kB may be better for Chrome/Edge
+//57kB basic memory to create TLS connections, and support large file downloading and uploading, but keep-alive may fail
 #undef  MEM_SIZE
 #if (ENABLE_HTTPS > 0)
-#define MEM_SIZE                (100*1024) 
+#define MEM_SIZE                (130*1024) 
 #else
 #define MEM_SIZE                (24*1024) 
 #endif
@@ -89,7 +89,12 @@ a lot of data that needs to be copied, this should be set high. */
 
 /* TCP Maximum segment size. http://lwip.wikia.com/wiki/Tuning_TCP */
 #undef TCP_MSS
-#define TCP_MSS                 800//(1500 - 40)	  /* TCP_MSS = (Ethernet MTU - IP header size - TCP header size) */
+//for HTTPS, at least 800; for HTTP can be smaller
+#if (ENABLE_HTTPS > 0)
+#define TCP_MSS                 800	 /* TCP_MSS = (Ethernet MTU - IP header size - TCP header size) */
+#else
+#define TCP_MSS                 536
+#endif
 
 /* TCP receive window. */
 #undef TCP_WND
