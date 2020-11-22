@@ -79,14 +79,16 @@
 
 #define HTTP_STATE_REQUEST_END			11 //response completely sent out
 
-#define SERVER_HEADER	"straight/1.1"
-#define DATE_HEADER		1
+#define SERVER_HEADER					"straight/1.1"
+#define DATE_HEADER						1
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define MAX_CONNECTIONS 				4		//max concurrent socket connections
-#define MAX_REQ_BUF_SIZE				TCP_MSS	//length of the request header is up to MAX_REQ_BUF_SIZE bytes
-#define MAX_APP_CONTEXT_SIZE			512		//reserved buffer for app/cgi layer, such as SSI_Context peocessing
+#define MAX_CONNECTIONS 				4			//max concurrent tcp connections, some browsers may use up to 4 connections for one session.
+#define MAX_REQ_BUF_SIZE				TCP_MSS		//max. length of the header that can be recognized, and it must be bigger than the max.length of path.
+													//the larger the receiving buffer, the faster the uploading speed.
+#define MAX_SEND_BUF_SIZE				2*TCP_MSS	//the larger sending buffer, the faster the downloading speed.
+#define MAX_APP_CONTEXT_SIZE			256			//reserved buffer for app/cgi layer, such as SSI_Context peocessing, >= size of SSI_Context: 216
 
 #define TO_RECV							60*1000
 #define TO_SENT							60*1000
@@ -121,7 +123,7 @@ typedef struct _RESPONSE_CONTEXT
 	unsigned long _nSendTimeout; 	//60*1000, for http_core.c
 	
 	int 	_bytesLeft;				//remaining data length, for http_core.c
-	char 	_sendBuffer[2*TCP_MSS];	//remaining data, for http_core.c
+	char 	_sendBuffer[MAX_SEND_BUF_SIZE];	//remaining data, for http_core.c
 	
 	char	_appContext[MAX_APP_CONTEXT_SIZE]; //additional context for app layer to save anything, e.g. file read/write info
 }RESPONSE_CONTEXT;
@@ -181,7 +183,7 @@ typedef struct _REQUEST_CONTEXT
 	
 	int  request_length;	//[0, max_level]
 	int  max_level; 		//MAX_REQ_BUF_SIZE
-	char http_request_buffer[MAX_REQ_BUF_SIZE + 20]; //receiving buffer, max space to hold the request
+	char http_request_buffer[MAX_REQ_BUF_SIZE + 4]; //receiving buffer, max space to hold the request, 4 bytes for null terminated string
 }REQUEST_CONTEXT;
 
 void PrintLwipStatus(void); //kill the odlest TIME_WAIT pcb and print active count
