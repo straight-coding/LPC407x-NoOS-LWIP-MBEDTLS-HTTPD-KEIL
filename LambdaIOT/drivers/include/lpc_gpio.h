@@ -140,7 +140,7 @@ typedef struct {
 #define PIN_GET(port,attr) 			(port->PIN&(1 << ((attr>>1) & 0x7F)))
 #define PIN_DIR(port,attr,dir)		(dir)?(port->DIR |= (1 << ((attr>>1) & 0x7F))):(port->DIR &= ~(1 << ((attr>>1) & 0x7F)))
 
-__inline void PIN_TOG(LPC_GPIO_TypeDef* port,uint32_t attr) 			
+static void PIN_TOG(LPC_GPIO_TypeDef* port,uint32_t attr) 			
 {
 	uint32_t pin_reg = port->PIN;
 	port->CLR = pin_reg&(1<<((attr>>1)&0x7f));
@@ -148,7 +148,7 @@ __inline void PIN_TOG(LPC_GPIO_TypeDef* port,uint32_t attr)
 	
 }
 
-__inline void PIN_CFG(LPC_GPIO_TypeDef* port,uint32_t attr)			
+static void PIN_CFG(LPC_GPIO_TypeDef* port,uint32_t attr)			
 {
 	PINSEL_ConfigPin((attr>>8)&0x0f,(attr>>1)&0x7f,(attr>>12)&0x0f);
 	if(((attr>>12)&0x0f) == 0)
