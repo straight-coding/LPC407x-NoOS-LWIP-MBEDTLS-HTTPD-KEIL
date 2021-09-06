@@ -45,6 +45,8 @@ static void SSDP_SendHeader(REQUEST_CONTEXT* context, char* HttpCodeInfo)
 
 static int SSDP_Sending(REQUEST_CONTEXT* context, char* buffer, int maxSize)
 {
+	extern struct altcp_pcb *g_pcbListen443;
+	
 	int off = 0;
 	int available = 128;
 	if (context->_requestMethod == METHOD_GET)
@@ -91,8 +93,12 @@ static int SSDP_Sending(REQUEST_CONTEXT* context, char* buffer, int maxSize)
 		{
 			if (off > maxSize-available)
 				goto block_end;
-			LWIP_sprintf(buffer +off, "<URLBase>https://%s</URLBase>\r\n", szIP);
-				off = strlen(buffer);
+			
+			if (g_pcbListen443 != NULL)
+				LWIP_sprintf(buffer +off, "<URLBase>https://%s</URLBase>\r\n", szIP);
+			else
+				LWIP_sprintf(buffer +off, "<URLBase>http://%s</URLBase>\r\n", szIP);
+			off = strlen(buffer);
 			context->ctxResponse._dwOperStage++;
 		}
 		if (context->ctxResponse._dwOperStage == 4)
@@ -123,8 +129,11 @@ static int SSDP_Sending(REQUEST_CONTEXT* context, char* buffer, int maxSize)
 		{
 			if (off > maxSize-available)
 				goto block_end;
-			LWIP_sprintf(buffer +off, "<presentationURL>https://%s</presentationURL>\r\n", szIP);
-				off = strlen(buffer);
+			if (g_pcbListen443 != NULL)
+				LWIP_sprintf(buffer +off, "<presentationURL>https://%s</presentationURL>\r\n", szIP);
+			else
+				LWIP_sprintf(buffer +off, "<presentationURL>http://%s</presentationURL>\r\n", szIP);
+			off = strlen(buffer);
 			context->ctxResponse._dwOperStage++;
 		}
 		if (context->ctxResponse._dwOperStage == 8)
